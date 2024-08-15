@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dispatch
+  labels:
+    project: instana
+    tier: dispatch
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: instana
+      tier: dispatch
+  template:
+    metadata:
+      labels:
+        project: instana
+        tier: dispatch
+    spec:
+      containers:
+      - name: dispatch
+        image: siva9666/dispatch-instana:v1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: dispatch-config
+        - secretRef:
+            name: dispatch-secrets

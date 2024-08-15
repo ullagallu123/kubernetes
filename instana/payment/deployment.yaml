@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment
+  labels:
+    project: instana
+    tier: payment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: instana
+      tier: payment
+  template:
+    metadata:
+      labels:
+        project: instana
+        tier: payment
+    spec:
+      containers:
+      - name: payment
+        image: siva9666/payment-instana:v1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: payment-config
+        - secretRef:
+            name: payment-secrets

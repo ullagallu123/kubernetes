@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  labels:
+    project: instana
+    tier: cache
+spec:
+  serviceName: "redis-headless"  # Headless service name
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+        project: instana
+        tier: cache
+    spec:
+      containers:
+      - name: redis
+        image: siva9666/redis-instana:v1
+        ports:
+        - containerPort: 6379
+          name: redis
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-data
+      labels:
+        project: instana
+        tier: cache
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: instana
+      resources:
+        requests:
+          storage: 1Gi

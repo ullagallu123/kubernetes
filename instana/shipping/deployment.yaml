@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping
+  labels:
+    project: instana
+    tier: shipping
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: shipping
+  template:
+    metadata:
+      labels:
+        app: shipping
+    spec:
+      containers:
+        - name: shipping
+          image: siva9666/shipping-instana:v1
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: shipping-config
+            - secretRef:
+                name: shipping-secrets

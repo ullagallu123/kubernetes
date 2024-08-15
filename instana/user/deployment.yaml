@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    project: instana
+    tier: user
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: siva9666/user-instana:v1
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: user-config

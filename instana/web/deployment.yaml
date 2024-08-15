@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    project: instana
+    tier: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: instana
+      tier: web
+  template:
+    metadata:
+      labels:
+        project: instana
+        tier: web
+    spec:
+      containers:
+      - name: web
+        image: siva9666/web-instana:v2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: web-config

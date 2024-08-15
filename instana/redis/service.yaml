@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-headless
+  labels:
+    project: instana
+    tier: cache
+spec:
+  ports:
+  - port: 6379
+    name: redis
+  clusterIP: None  # Makes the service headless
+  selector:
+    app: redis
