@@ -17,7 +17,6 @@ spec:
       containers:
       - name: debug-container
         image: siva9666/debug:alpine
-        imagePullPolicy: IfNotPresent
-       
+        imagePullPolicy: IfNotPresent 
         command: ["/bin/sh", "-c"]  
         args: ["sleep infinity"]
