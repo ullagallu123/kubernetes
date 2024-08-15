@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+    project: expense
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+      project: expense
+  template:
+    metadata:
+      labels:
+        app: backend
+        project: expense
+    spec:
+      containers:
+        - name: backend
+          image: siva9666/expense-backend:v1
+          envFrom:
+            - configMapRef:
+                name: backend-config
+            - secretRef:
+                name: backend-secrets
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debug
+  labels:
+    type: debug
+    project: expense
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debug
+  template:
+    metadata:
+      labels:
+        app: debug
+    spec:
+      containers:
+      - name: debug
+        image: siva9666/debug:v1
+        command: ["sh", "-c", "tail -f /dev/null"]
+
