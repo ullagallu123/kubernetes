@@ -4,4 +4,9 @@ metadata:
   name: instana
 provisioner: ebs.csi.aws.com
 volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
 allowVolumeExpansion: true
+parameters:
+  csi.storage.k8s.io/fstype: xfs
+  type: gp3
+  encrypted: "true"
