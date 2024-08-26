@@ -73,8 +73,8 @@ eksctl create nodegroup --cluster=$CLUSTER_NAME \
                        --external-dns-access \
                        --full-ecr-access \
                        --appmesh-access \
+                       --spot \
                        --alb-ingress-access &>>"$LOG_FILE"
-                       #--spot 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to create nodegroup." | tee -a "$LOG_FILE"
     exit 1
