@@ -5,13 +5,13 @@ CLUSTER_NAME="siva"
 REGION="ap-south-1"
 ZONES="ap-south-1a,ap-south-1b"
 NODEGROUP_NAME="siva-ng1"
-NODE_TYPE="t3a.large"
-NODES=2
-NODES_MIN=2
-NODES_MAX=4
+NODE_TYPE="t3a.medium"
+NODES=4
+NODES_MIN=4
+NODES_MAX=10
 NODE_VOLUME_SIZE=20
 SSH_PUBLIC_KEY="siva"
-PROFILE="mb"
+PROFILE="eks"
 LOG_FILE="/tmp/eks_setup_$(date +%Y-%m-%d_%H-%M-%S).log"
 
 # Function to calculate elapsed time

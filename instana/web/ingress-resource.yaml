@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: instana
+  annotations:
+        alb.ingress.kubernetes.io/scheme: internet-facing
+        alb.ingress.kubernetes.io/target-type: ip
+        alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
+        alb.ingress.kubernetes.io/group.name: ullagallu
+        alb.ingress.kubernetes.io/group.order: '20'
+
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "instana.test.ullagallu.cloud"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: web
+            port:
+              number: 80

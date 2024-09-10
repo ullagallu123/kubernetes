@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
+    alb.ingress.kubernetes.io/group.name: ullagallu
+    alb.ingress.kubernetes.io/group.order: '30'
+    alb.ingress.kubernetes.io/healthcheck-path: "/api/status"
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "logging.test.ullagallu.cloud"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kibana
+            port:
+              number: 8080

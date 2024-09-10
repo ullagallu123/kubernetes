@@ -21,7 +21,14 @@ spec:
           image: siva9666/rabbit-instana:v1
           ports:
             - containerPort: 5672
-              name: rabbitmq
+              name: amqp
+          # resources:
+          #   requests:
+          #     memory: "256Mi"
+          #     cpu: "50m"
+          #   limits:
+          #     memory: "512Mi"
+          #     cpu: "100m"
           volumeMounts:
             - name: rabbit-storage
               mountPath: /var/lib/rabbitmq

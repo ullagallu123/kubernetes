@@ -1,3 +1,3 @@
-eksctl get nodegroup --cluster=siva --profile nv
-eksctl get cluster --profile nv
-eksctl delete cluster siva --profile nv
+eksctl get nodegroup --cluster=siva --profile eks
+eksctl get cluster --profile eks
+eksctl delete cluster siva --profile eks

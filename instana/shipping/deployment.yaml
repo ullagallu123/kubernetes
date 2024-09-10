@@ -20,6 +20,29 @@ spec:
           image: siva9666/shipping-instana:v1
           ports:
             - containerPort: 8080
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: 8080
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: 8080
+          #   initialDelaySeconds: 60
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # resources:
+          #   requests:
+          #     memory: "256Mi"
+          #     cpu: "20m"
+          #   limits:
+          #     memory: "512Mi"
+          #     cpu: "30m"
           envFrom:
             - configMapRef:
                 name: shipping-config

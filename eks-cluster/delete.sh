@@ -2,7 +2,7 @@
 
 # Variables
 CLUSTER_NAME="siva"
-PROFILE="mb"
+PROFILE="eks"
 
 # Function to calculate elapsed time
 elapsed_time() {
