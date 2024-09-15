@@ -36,13 +36,13 @@ spec:
           #   periodSeconds: 10
           #   timeoutSeconds: 5
           #   failureThreshold: 3
-          # resources:
-          #   requests:
-          #     memory: "256Mi"
-          #     cpu: "20m"
-          #   limits:
-          #     memory: "512Mi"
-          #     cpu: "30m"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
           envFrom:
             - configMapRef:
                 name: shipping-config

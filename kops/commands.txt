@@ -1,0 +1,8 @@
+kops update cluster --name ullagallu.cloud --yes --admin
+
+kops edit cluster --name ullagallu.cloud
+
+kops delete ig spot-1 --name ullagallu.cloud
+
+kops get ig spot-1 --name $NAME -o yaml
+

@@ -20,29 +20,29 @@ spec:
           image: siva9666/user-instana:v1
           ports:
             - containerPort: 8080
-          # livenessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: 8080
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: 8080
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          # resources:
-          #   requests:
-          #     cpu: "25m"
-          #     memory: "64Mi"
-          #   limits:
-          #     cpu: "50m"
-          #     memory: "128Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
           envFrom:
             - configMapRef:
                 name: user-config

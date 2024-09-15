@@ -25,35 +25,13 @@ spec:
           volumeMounts:
             - name: mongo-storage
               mountPath: /data/db
-          # livenessProbe:
-          #   exec:
-          #     command:
-          #       - mongosh
-          #       - --eval
-          #       - "db.adminCommand('ping')"
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   successThreshold: 1
-          #   failureThreshold: 6
-          # readinessProbe:
-          #   exec:
-          #     command:
-          #       - mongosh
-          #       - --eval
-          #       - "db.adminCommand('ping')"
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   successThreshold: 1
-          #   failureThreshold: 6
-          # resources:
-          #   requests:
-          #     memory: "256Mi"
-          #     cpu: "100m"
-          #   limits:
-          #     memory: "512Mi"
-          #     cpu: "500m"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "200m"
       volumes:
         - name: mongo-storage
           persistentVolumeClaim:

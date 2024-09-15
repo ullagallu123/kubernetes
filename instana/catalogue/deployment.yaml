@@ -20,29 +20,29 @@ spec:
           image: siva9666/catalogue-instana:v1
           ports:
             - containerPort: 8080
-          # livenessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: 8080
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: 8080
-          #   initialDelaySeconds: 30
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          # resources:
-          #   requests:
-          #     cpu: "30m"
-          #     memory: "128Mi"
-          #   limits:
-          #     cpu: "50m"
-          #     memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "30m"
+              memory: "128Mi"
+            limits:
+              cpu: "50m"
+              memory: "256Mi"
           envFrom:
             - configMapRef:
                 name: catalogue-config

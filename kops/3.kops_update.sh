@@ -1,3 +1,3 @@
 #!/bin/bash
-export KOPS_STATE_STORE=s3://siva.cp.os
-kops update cluster --name test.ullagallu.cloud --yes --admin
+export KOPS_STATE_STORE=s3://kops.ullagallu.cloud
+kops update cluster --name ullagallu.cloud --yes --admin

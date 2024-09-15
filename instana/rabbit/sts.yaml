@@ -22,13 +22,13 @@ spec:
           ports:
             - containerPort: 5672
               name: amqp
-          # resources:
-          #   requests:
-          #     memory: "256Mi"
-          #     cpu: "50m"
-          #   limits:
-          #     memory: "512Mi"
-          #     cpu: "100m"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "100m"
+            limits:
+              memory: "1024Mi"
+              cpu: "200m"
           volumeMounts:
             - name: rabbit-storage
               mountPath: /var/lib/rabbitmq

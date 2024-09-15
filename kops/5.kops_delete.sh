@@ -1,3 +1,3 @@
 #!/bin/bash
-export KOPS_STATE_STORE=s3://siva.cp.os
-kops delete cluster test.ullagallu.cloud --yes
+export KOPS_STATE_STORE=s3://kops.ullagallu.cloud
+kops delete cluster ullagallu.cloud --yes

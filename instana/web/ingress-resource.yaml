@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: "instana.test.ullagallu.cloud"
+  - host: "instana.ullagallu.cloud"
     http:
       paths:
       - pathType: Prefix

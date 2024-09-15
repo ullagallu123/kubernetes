@@ -22,31 +22,31 @@ spec:
         image: siva9666/web-instana:v2
         ports:
         - containerPort: 80
-        # livenessProbe:
-        #   httpGet:
-        #     path: /health
-        #     port: 80
-        #     scheme: HTTP
-        #   initialDelaySeconds: 30
-        #   periodSeconds: 10
-        #   timeoutSeconds: 5
-        #   failureThreshold: 3
-        # readinessProbe:
-        #   httpGet:
-        #     path: /health
-        #     port: 80
-        #     scheme: HTTP
-        #   initialDelaySeconds: 10
-        #   periodSeconds: 10
-        #   timeoutSeconds: 5
-        #   failureThreshold: 3
-        # resources:
-        #   requests:
-        #     memory: "128Mi"
-        #     cpu: "20m"
-        #   limits:
-        #     memory: "256Mi"
-        #     cpu: "40m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
         volumeMounts:
         - name: nginx-config
           mountPath: /etc/nginx/nginx.conf
