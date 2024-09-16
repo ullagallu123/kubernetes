@@ -16,8 +16,8 @@ spec:
         target:
           type: Utilization
           averageUtilization: 80
-behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 120
-    scaleDown:
-      stabilizationWindowSeconds: 120
+  behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 120
+      scaleDown:
+        stabilizationWindowSeconds: 180

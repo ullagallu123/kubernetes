@@ -1,7 +1,7 @@
 kops create cluster \
     --cloud=aws \
     --name=ullagallu.cloud \
-    --node-count=1 \
+    --node-count=2 \
     --node-size=t3a.small \
     --node-volume-size=20 \
     --control-plane-count=1 \

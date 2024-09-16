@@ -6,3 +6,6 @@ kops delete ig spot-1 --name ullagallu.cloud
 
 kops get ig spot-1 --name $NAME -o yaml
 
+helm repo updatekubectl delete clusterrolebinding aws-load-balancer-controller-role-bindin
+awsLoadBalancerController:
+    enabled: true
