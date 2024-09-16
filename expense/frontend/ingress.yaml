@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: "expense.test.ullagallu.cloud"
+  - host: "expense.ullagallu.cloud"
     http:
       paths:
       - pathType: Prefix
