@@ -6,7 +6,7 @@ metadata:
     project: instana
     tier: web
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     project: instana
     tier: web
@@ -14,3 +14,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
+    nodePort: 32122

@@ -1,0 +1,9 @@
+# apiVersion: elbv2.k8s.aws/v1beta1
+# kind: TargetGroupBinding
+# metadata:
+#   name: expense-tgb
+# spec:
+#   serviceRef:
+#     name: expense
+#     port: 80
+#   targetGroupARN: arn:aws:elasticloadbalancing:ap-south-1:427366301535:targetgroup/expense-ullagallu/534d391f8a9ec326

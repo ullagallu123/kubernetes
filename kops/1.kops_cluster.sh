@@ -1,6 +1,6 @@
 kops create cluster \
     --cloud=aws \
-    --name=ullagallu.cloud \
+    --name=prod.konkas.tech \
     --node-count=2 \
     --node-size=t3a.small \
     --node-volume-size=20 \
@@ -11,7 +11,7 @@ kops create cluster \
     --control-plane-zones=ap-south-1b \
     --state=s3://kops.ullagallu.cloud \
     --dns=public \
-    --dns-zone=ullagallu.cloud \
+    --dns-zone=konkas.tech \
     --networking=cilium
    
 

@@ -6,7 +6,7 @@ metadata:
     project: instana
     tier: payment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       project: instana
@@ -22,29 +22,6 @@ spec:
         image: siva9666/payment-instana:v1
         ports:
         - containerPort: 8080
-        livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 3
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "256Mi"
-          limits:
-            cpu: "200m"
-            memory: "512Mi"
         envFrom:
         - configMapRef:
             name: payment-config
