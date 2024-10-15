@@ -21,6 +21,13 @@ spec:
         image: siva9666/expense-mysql:v1
         ports:
         - containerPort: 3306
+        resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 2Gi
+              cpu: 800m
         envFrom:
           - secretRef:
                 name: mysql-secret

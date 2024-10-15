@@ -20,6 +20,13 @@ spec:
           image: siva9666/shipping-instana:v1
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: 800m
+            limits:
+              memory: "2Gi"
+              cpu: 1000m
           envFrom:
             - configMapRef:
                 name: shipping-config

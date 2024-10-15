@@ -1,4 +1,4 @@
-kops update cluster --name prod.konkas.tech --yes --admin
+kops update cluster  --state=s3://kops.ullagallu.cloud --name app.konkas.tech --yes --admin
 
 kops edit cluster --name prod.konkas.tech
 

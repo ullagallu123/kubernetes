@@ -1,0 +1,2 @@
+kubectl create ns expense
+kubectl create ns instana
