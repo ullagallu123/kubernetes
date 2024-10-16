@@ -34,50 +34,6 @@ pause() {
     sleep "$duration"
 }
 
-# Cluster Creation
-print_message "Starting Cluster Creation"
-kops create cluster \
-    --cloud=aws \
-    --name=app.konkas.tech \
-    --node-count=1 \
-    --node-size=t3a.small \
-    --node-volume-size=20 \
-    --control-plane-count=1 \
-    --control-plane-size=t3a.medium \
-    --control-plane-volume-size=20 \
-    --zones=ap-south-1a,ap-south-1b \
-    --control-plane-zones=ap-south-1b \
-    --state="$KOPS_STATE_STORE" \
-    --dns=public \
-    --dns-zone=konkas.tech \
-    --networking=cilium
-
-# Deleting default instance groups
-print_message "Deleting Default Instance Groups"
-kops delete ig nodes-ap-south-1a --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" --yes
-kops delete ig nodes-ap-south-1b --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" --yes
-
-# Creating Spot Instance Group
-print_message "Creating Spot Instance Group"
-kops toolbox instance-selector "spot-1" \
-    --usage-class spot --cluster-autoscaler \
-    --base-instance-type "t3a.medium" \
-    --allow-list '^t3a.*' --gpus 0 \
-    --node-count-max 10 --node-count-min 4 \
-    --node-volume-size 20 \
-    --name="$CLUSTER_NAME"
-
-print_message "Apply the changes in the Cloud"
-kops update cluster  --name=$CLUSTER_NAME  --yes --admin
-
-# Wait for the cluster to be ready
-print_message "Waiting for 9 minutes for Cluster to be Ready"
-for ((i=9; i>0; i--)); do
-    echo "Cluster will be ready in $i minute(s)..."
-    sleep 1m
-done
-print_message "Cluster is Ready!"
-
 # Storage Class Creation
 print_message "Creating Storage Classes for Instana and Expense"
 kubectl apply -f "$NIHARIKA/k8s-volumes/dynamic-volume/instana.yaml"
@@ -85,8 +41,8 @@ kubectl apply -f "$NIHARIKA/k8s-volumes/dynamic-volume/expense.yaml"
 
 # Namespace Creation
 print_message "Creating Namespaces for Instana and Expense"
-kubectl create ns "$NS1"
-kubectl create ns "$NS2"
+kubectl get ns "$NS1" &>/dev/null || kubectl create ns "$NS1"
+kubectl get ns "$NS2" &>/dev/null || kubectl create ns "$NS2"
 
 # Metrics Server Deployment
 print_message "Deploying Metrics Server"

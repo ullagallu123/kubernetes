@@ -1,0 +1,18 @@
+mysql:
+  image: siva9666/expense-mysql:v1
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+    limits:
+      memory: 2Gi
+      cpu: 800m
+
+  secret:
+    rootPassword: RXhwZW5zZUFwcEAx
+
+  storage:
+    size: 1Gi
+    storageClass: expense
+
+replicaCount: 1

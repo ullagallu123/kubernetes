@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  labels:
+    type: db
+    project: expense
+spec:
+  serviceName: mysql
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: {{ .Values.mysql.image }}
+        ports:
+        - containerPort: 3306
+        resources:
+          requests:
+            memory: {{ .Values.mysql.resources.requests.memory }}
+            cpu: {{ .Values.mysql.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.mysql.resources.limits.memory }}
+            cpu: {{ .Values.mysql.resources.limits.cpu }}
+        envFrom:
+          - secretRef:
+              name: mysql-secret
+        volumeMounts:
+        - name: expense
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: expense
+      labels:
+        app: mysql
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: {{ .Values.mysql.storage.storageClass }}
+      resources:
+        requests:
+          storage: {{ .Values.mysql.storage.size }}
