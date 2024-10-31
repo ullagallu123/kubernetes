@@ -4,18 +4,18 @@ metadata:
   name: payment
   labels:
     project: instana
-    tier: payment
+    tier: payment-backend
 spec:
   replicas: 2
   selector:
     matchLabels:
       project: instana
-      tier: payment
+      tier: payment-backend
   template:
     metadata:
       labels:
         project: instana
-        tier: payment
+        tier: payment-backend
     spec:
       containers:
       - name: payment
@@ -24,11 +24,29 @@ spec:
         - containerPort: 8080
         resources:
             requests:
-              memory: 500Mi
+              memory: 512Mi
               cpu: 200m
             limits:
-              memory: 700Mi
+              memory: 1024Mi
               cpu: 400m
+        readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10     
+            periodSeconds: 10           
+            timeoutSeconds: 2           
+            successThreshold: 1
+            failureThreshold: 3          
+        livenessProbe:
+            httpGet:
+              path: /health             
+              port: 8080
+            initialDelaySeconds: 20    
+            periodSeconds: 10          
+            timeoutSeconds: 2            
+            successThreshold: 1      
+            failureThreshold: 3
         envFrom:
         - configMapRef:
             name: payment-config

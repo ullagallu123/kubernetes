@@ -4,10 +4,10 @@ metadata:
   name: user
   labels:
     project: instana
-    tier: user
+    tier: user-backend
 spec:
   selector:
-    app: user
+    tier: user-backend
   ports:
     - port: 8080
       targetPort: 8080

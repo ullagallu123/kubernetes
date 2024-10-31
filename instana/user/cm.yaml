@@ -4,7 +4,7 @@ metadata:
   name: user-config
   labels:
     project: instana
-    tier: user
+    tier: user-backend
 data:
   MONGO: "true"
   MONGO_URL: "mongodb://mongo:27017/catalogue"

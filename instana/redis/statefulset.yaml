@@ -4,19 +4,19 @@ metadata:
   name: redis
   labels:
     project: instana
-    tier: cache
 spec:
   serviceName: "redis-headless"
   replicas: 1
   selector:
     matchLabels:
       app: redis
+      tier: cache-db
   template:
     metadata:
       labels:
         app: redis
         project: instana
-        tier: cache
+        tier: cache-db
     spec:
       containers:
       - name: redis
@@ -34,6 +34,30 @@ spec:
             limits:
               memory: 300Mi
               cpu: 100m
+        livenessProbe:
+          exec:
+            command:
+              - "redis-cli"
+              - "-p"
+              - "7000"
+              - "ping"
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+
+        readinessProbe:
+          exec:
+            command:
+              - "redis-cli"
+              - "-p"
+              - "7000"
+              - "ping"
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+
   volumeClaimTemplates:
   - metadata:
       name: redis-data

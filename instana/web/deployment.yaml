@@ -19,10 +19,34 @@ spec:
     spec:
       containers:
       - name: web
-        image: siva9666/web-instana:v2
+        image: siva9666/web-instana:monitoring-v2
         ports:
-        
         - containerPort: 80
+        resources:
+            requests:
+              memory: 128Mi
+              cpu: 30m
+            limits:
+              memory: 256Mi
+              cpu: 60m
+        readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5      
+            periodSeconds: 10           
+            timeoutSeconds: 2           
+            successThreshold: 1
+            failureThreshold: 3          
+        livenessProbe:
+            httpGet:
+              path: /             
+              port: 80
+            initialDelaySeconds: 10    
+            periodSeconds: 10          
+            timeoutSeconds: 2            
+            successThreshold: 1      
+            failureThreshold: 3
         volumeMounts:
         - name: nginx-config
           mountPath: /etc/nginx/nginx.conf

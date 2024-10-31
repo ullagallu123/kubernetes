@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "..fullname" . }}
+  name: {{ .Release.Name }}
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    project: instana
+    tier: mongo-db
 spec:
-  type: {{ .Values.service.type }}
+  clusterIP: None # Headless service for StatefulSet.
+  selector:
+    app: {{ .Release.Name }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "..selectorLabels" . | nindent 4 }}
+      name: mongo

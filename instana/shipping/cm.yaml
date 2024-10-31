@@ -4,7 +4,7 @@ metadata:
   name: shipping-config
   labels:
     project: instana
-    tier: shipping
+    tier: shipping-backend
 data:
   DB_HOST: "mysql"
   DB_PORT: "3306"

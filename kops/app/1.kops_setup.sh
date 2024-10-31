@@ -2,8 +2,9 @@
 
 # Variables
 CLUSTER_NAME="app.konkas.tech"
-SPOT_ASG_MAX=3
-SPOT_ASG_MIN=2
+SPOT_ASG_MAX=10
+SPOT_ASG_MIN=4
+SPOT_INSTANCE_TYPE="t3a.medium"
 
 # Function to print messages
 print_message() {
@@ -67,7 +68,7 @@ print_message "Creating Spot Instance Group"
 if ! kops get ig spot-1 --name="$CLUSTER_NAME" &>/dev/null; then
     kops toolbox instance-selector "spot-1" \
         --usage-class spot --cluster-autoscaler \
-        --base-instance-type "t3a.medium" \
+        --base-instance-type $SPOT_INSTANCE_TYPE \
         --allow-list '^t3a.*' --gpus 0 \
         --node-count-max $SPOT_ASG_MAX --node-count-min $SPOT_ASG_MIN \
         --node-volume-size 20 \

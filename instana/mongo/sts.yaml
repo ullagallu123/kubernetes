@@ -4,7 +4,7 @@ metadata:
   name: mongo
   labels:
     project: instana
-    tier: mongo-db
+    tier: db
 spec:
   serviceName: "mongo"
   replicas: 1
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: mongo
-          image: siva9666/mongo-instana:v1
+          image: siva9666/mongo-instana:monitoring-v1
           ports:
             - containerPort: 27017
               name: mongo
@@ -29,6 +29,28 @@ spec:
             limits:
               memory: 2Gi
               cpu: 500m
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "echo 'db.stats().ok' | mongo localhost:27017/test --quiet"
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
+
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "echo 'db.stats().ok' | mongo localhost:27017/test --quiet"
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 5
+
           volumeMounts:
             - name: mongo-storage
               mountPath: /data/db

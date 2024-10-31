@@ -4,7 +4,7 @@ metadata:
   name: payment
   labels:
     project: instana
-    tier: payment
+    tier: payment-backend
 spec:
   selector:
     project: instana

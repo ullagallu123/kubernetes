@@ -4,6 +4,6 @@ metadata:
   name: dispatch-config
   labels:
     project: instana
-    tier: dispatch
+    tier: backend
 data:
   AMQP_HOST: "rabbit"

@@ -4,7 +4,7 @@ metadata:
   name: rabbit
   labels:
     project: instana
-    tier: queue
+    tier: queue-db
 spec:
   clusterIP: None
   selector:

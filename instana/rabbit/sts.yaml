@@ -4,17 +4,19 @@ metadata:
   name: rabbit
   labels:
     project: instana
-    tier: queue
+    tier: queue-db
 spec:
   serviceName: "rabbit"
   replicas: 1
   selector:
     matchLabels:
       app: rabbit
+      tier: queue-db
   template:
     metadata:
       labels:
         app: rabbit
+        tier: queue-db
     spec:
       containers:
         - name: rabbit
@@ -29,6 +31,27 @@ spec:
             limits:
               memory: 2Gi
               cpu: 1000m
+          livenessProbe:
+            exec:
+              command:
+                - "rabbitmq-diagnostics"
+                - "-q"
+                - "ping"
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - "rabbitmq-diagnostics"
+                - "-q"
+                - "ping"
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 30
+            failureThreshold: 3
+
           volumeMounts:
             - name: rabbit-storage
               mountPath: /var/lib/rabbitmq

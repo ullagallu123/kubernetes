@@ -1,15 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "..fullname" . }}
+  name: mysql
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    project: instana
+    tier: mysql-db
 spec:
-  type: {{ .Values.service.type }}
+  clusterIP: None
+  selector:
+    app: mysql
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "..selectorLabels" . | nindent 4 }}
+      name: mysql

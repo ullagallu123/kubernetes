@@ -4,7 +4,7 @@ metadata:
   name: payment-config
   labels:
     project: instana
-    tier: payment
+    tier: payment-backend
 data:
   CART_HOST: "cart"
   CART_PORT: "8080"

@@ -1,15 +1,13 @@
-apiVersion: v1
-kind: Service
+apiVersion: v1 
+kind: Service 
 metadata:
-  name: {{ include "..fullname" . }}
+  name: user 
   labels:
-    {{- include "..labels" . | nindent 4 }}
+    project: instana 
+    tier: user-backend 
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "..selectorLabels" . | nindent 4 }}
+    tier: user-backend 
+  ports:
+    - port: {{ .Values.service.port }} 
+      targetPort: {{ .Values.service.port }} 

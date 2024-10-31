@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalogue-config
+  labels:
+    project: instana
+    tier: catalogue
+data:
+  MONGO: {{ .Values.config.MONGO | quote }}
+  MONGO_URL: {{ .Values.config.MONGO_URL | quote }}

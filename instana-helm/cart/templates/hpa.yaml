@@ -1,32 +1,18 @@
-{{- if .Values.autoscaling.enabled }}
 apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+kind: HorizontalPodAutoscaler 
 metadata:
-  name: {{ include "..fullname" . }}
-  labels:
-    {{- include "..labels" . | nindent 4 }}
+  name: cart-hpa 
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: {{ include "..fullname" . }}
-  minReplicas: {{ .Values.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+    apiVersion: apps/v1 
+    kind: Deployment 
+    name: cart 
+  minReplicas: {{ .Values.hpa.minReplicas }} 
+  maxReplicas: {{ .Values.hpa.maxReplicas }} 
   metrics:
-    {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
-    - type: Resource
+    - type: Resource 
       resource:
-        name: cpu
+        name: cpu 
         target:
-          type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
-    {{- end }}
-    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
-    {{- end }}
-{{- end }}
+          type: Utilization 
+          averageUtilization: {{ .Values.hpa.cpuUtilizationTarget }} 

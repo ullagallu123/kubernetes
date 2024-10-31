@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-config
+  labels:
+    project: instana
+    tier: payment-backend
+data:
+  CART_HOST: {{ .Values.config.CART_HOST | quote }}
+  CART_PORT: {{ .Values.config.CART_PORT | quote }}
+  USER_HOST: {{ .Values.config.USER_HOST | quote }}
+  USER_PORT: {{ .Values.config.USER_PORT | quote }}
+  AMQP_HOST: {{ .Values.config.AMQP_HOST | quote }}
