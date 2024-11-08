@@ -59,7 +59,21 @@ pause() {
     sleep "$duration"
 }
 
-HOME_FOL="/home/ubuntu/kubernetes"
+# Check the OS
+OS_NAME=$(grep ^NAME= /etc/os-release | cut -d '"' -f 2)
+
+# Set HOME_FOL based on the OS
+if [[ $OS_NAME == "Ubuntu" ]]; then
+    HOME_FOL="/home/ubuntu/kubernetes"
+elif [[ $OS_NAME == "AlmaLinux" ]]; then
+    HOME_FOL="/home/alma/kubernetes"
+else
+    echo "Unsupported OS"
+    exit 1
+fi
+
+echo "HOME_FOL is set to: $HOME_FOL"
+
 EXPENSE_KUBE="$HOME_FOL/expense"
 INSTANA_KUBE="$HOME_FOL/instana"
 KOPS_HOME="$HOME_FOL/kops/app"
@@ -183,7 +197,6 @@ apply_kubectl "$EXPENSE_KUBE/frontend" "$NS2"
 
 # Final message
 print_message "All Deployments Have Been Successfully Applied!"
-
 
 
 
