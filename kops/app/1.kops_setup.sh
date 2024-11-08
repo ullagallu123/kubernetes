@@ -30,22 +30,60 @@ if ! kops get cluster --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE" &>/dev/
         --state="$KOPS_STATE_STORE" \
         --dns=public \
         --dns-zone=konkas.tech \
-        --networking=cilium
+        --networking=calico
     print_message "Cluster creation initiated."
 else
     print_message "Cluster already exists. Skipping creation."
 fi
 
-# Update cluster configuration if necessary
+kops create secret sshpublickey admin -i ~/.ssh/id_ed25519.pub --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE"
+
+
 kops get cluster --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE" -o yaml > cluster.yaml
-if ! grep -q "volumeSize: 3" cluster.yaml; then
-    sed -i '/instanceGroup: control-plane-ap-south-1b/a \ \ \ \ \ \ volumeSize: 3' cluster.yaml
+
+# Function to print messages
+print_message() {
+    echo "$1"
+}
+
+# Check if all configurations are present, except awsLoadBalancerController
+if ! grep -q "volumeSize: 3" cluster.yaml || \
+   ! grep -q "metricsServer:" cluster.yaml || \
+   ! grep -q "certManager:" cluster.yaml; then
+
+    # Add volumeSize for the control plane instance group if missing
+    if ! grep -q "volumeSize: 3" cluster.yaml; then
+        sed -i '/instanceGroup: control-plane-ap-south-1b/a \ \ \ \ \ \ volumeSize: 3' cluster.yaml
+    fi
+
+    # Add metricsServer if missing
+    if ! grep -q "metricsServer:" cluster.yaml; then
+        sed -i '/spec:/a \ \ metricsServer:' cluster.yaml
+        sed -i '/metricsServer:/a \ \ \ \ enabled: true' cluster.yaml
+    fi
+
+    # Add certManager if missing
+    if ! grep -q "certManager:" cluster.yaml; then
+        sed -i '/spec:/a \ \ certManager:' cluster.yaml
+        sed -i '/certManager:/a \ \ \ \ enabled: true' cluster.yaml
+    fi
+
+    # Apply the updated configuration
     kops replace -f cluster.yaml
+
     print_message "Cluster configuration updated."
 else
     print_message "No changes needed for the cluster configuration."
 fi
-rm -rf cluster.yaml
+
+# Cleanup
+rm -rf cluster.yaml  # Removes only cluster.yaml; adjust if needed
+
+
+
+# Fetch the cluster configuration and output to YAML file
+kops get cluster --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE" -o yaml > cluster.yaml
+
 
 # Deleting default instance groups
 print_message "Deleting Default Instance Groups"
@@ -81,3 +119,6 @@ fi
 # Apply the changes in the Cloud
 print_message "Applying Cluster Changes"
 kops update cluster --name="$CLUSTER_NAME" --yes --admin
+
+
+

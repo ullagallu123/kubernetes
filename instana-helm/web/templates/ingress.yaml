@@ -12,7 +12,7 @@ metadata:
     alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
     alb.ingress.kubernetes.io/group.name: ullagallu
     alb.ingress.kubernetes.io/group.order: '20'
-    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/healthcheck-path: '/health'
 spec:
   ingressClassName: alb
   rules:

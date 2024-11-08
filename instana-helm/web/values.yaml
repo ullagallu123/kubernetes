@@ -5,13 +5,14 @@ image:
   tag: monitoring-v2
 
 service:
-  type: NodePort
+  type: NodePort 
   port: 80
-  nodePort: 32122
+  nodePort: 32122  # Only used if type is NodePort
+
 
 ingress:
   enabled: false
-  host: "instana.ullagallu.cloud"
+  host: "instana.konkas.tech"
   
 resources:
   requests:
