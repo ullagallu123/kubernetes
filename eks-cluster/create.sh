@@ -1,17 +1,18 @@
 #!/bin/bash
 
 # Variables
-CLUSTER_NAME="siva"
+CLUSTER_NAME="ullagallu"
 REGION="ap-south-1"
 ZONES="ap-south-1a,ap-south-1b"
-NODEGROUP_NAME="siva-ng1"
-NODE_TYPE="t3a.large"
+NODEGROUP_NAME="ng1"
+NODE_TYPE="t3a.medium"
 NODES=2
 NODES_MIN=2
 NODES_MAX=4
 NODE_VOLUME_SIZE=20
 SSH_PUBLIC_KEY="dev"
-PROFILE="eks"
+
+PROFILE="eks-siva.bapatlas.site"
 LOG_FILE="/tmp/eks_setup_$(date +%Y-%m-%d_%H-%M-%S).log"
 
 # Function to calculate elapsed time

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Variables
-CLUSTER_NAME="siva"
-PROFILE="eks"
+CLUSTER_NAME="ullagallu"
+PROFILE="eks-siva.bapatlas.site"
 
 # Function to calculate elapsed time
 elapsed_time() {
