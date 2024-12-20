@@ -12,3 +12,6 @@ spec:
   ports:
     - port: 3306
       name: mysql
+
+
+# kubectl run debug --image=siva9666/debug-utility:v1 --restart=Never -- sleep 3600

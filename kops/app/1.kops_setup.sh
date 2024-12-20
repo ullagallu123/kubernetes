@@ -1,10 +1,20 @@
 #!/bin/bash
 
-# Variables
-CLUSTER_NAME="app.konkas.tech"
-SPOT_ASG_MAX=10
+SPOT_ASG_MAX=8
 SPOT_ASG_MIN=4
 SPOT_INSTANCE_TYPE="t3a.medium"
+
+NODE_COUNT=4
+NODE_SIZE="t3a.small"
+NODE_VOLUME_SIZE=20
+NODE_ZONES="ap-south-1a,ap-south-1b"
+CONTROL_PLANE_COUNT=1
+CONTROL_PLANE_SIZE="t3a.small"
+CONTROL_PLANE_VOLUME_SIZE=20
+CONTROL_PLANE_ZONES="ap-south-1a"
+DNS_ZONE="bapatlas.site"
+NETWORK_PLUGIN=calico
+ETCD_VOLUME_SIZE=3
 
 # Function to print messages
 print_message() {
@@ -19,18 +29,18 @@ if ! kops get cluster --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE" &>/dev/
     kops create cluster \
         --cloud=aws \
         --name="$CLUSTER_NAME" \
-        --node-count=1 \
-        --node-size=t3a.small \
-        --node-volume-size=20 \
-        --control-plane-count=1 \
-        --control-plane-size=t3a.medium \
-        --control-plane-volume-size=20 \
-        --zones=ap-south-1a,ap-south-1b \
-        --control-plane-zones=ap-south-1b \
+        --node-count="$NODE_COUNT" \
+        --node-size="$NODE_SIZE" \
+        --node-volume-size="$NODE_VOLUME_SIZE" \
+        --control-plane-count="$CONTROL_PLANE_COUNT" \
+        --control-plane-size="$CONTROL_PLANE_SIZE" \
+        --control-plane-volume-size="$CONTROL_PLANE_VOLUME_SIZE" \
+        --zones="$NODE_ZONES" \
+        --control-plane-zones="$CONTROL_PLANE_ZONES" \
         --state="$KOPS_STATE_STORE" \
         --dns=public \
-        --dns-zone=konkas.tech \
-        --networking=calico
+        --dns-zone="$DNS_ZONE" \
+        --networking="$NETWORK_PLUGIN"
     print_message "Cluster creation initiated."
 else
     print_message "Cluster already exists. Skipping creation."

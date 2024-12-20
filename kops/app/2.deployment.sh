@@ -6,7 +6,6 @@ print_message() {
     echo "$1"
     echo "=================================================================="
 }
-
 # Function to apply Kubernetes manifests with error checking
 apply_kubectl() {
     local file_path=$1
@@ -97,8 +96,8 @@ kubectl get ns "$NS2" &>/dev/null || kubectl create ns "$NS2"
 #kubectl get ns "$NS3" &>/dev/null || kubectl create ns "$NS3"
 
 # # Metrics Server Deployment
-# print_message "Deploying Metrics Server"
-# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+print_message "Deploying Metrics Server"
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 deployment_method=$1
 
@@ -197,17 +196,3 @@ apply_kubectl "$EXPENSE_KUBE/frontend" "$NS2"
 
 # Final message
 print_message "All Deployments Have Been Successfully Applied!"
-
-
-
-#helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-#helm repo update
-
-
-
-#helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring -f "$KOPS_HOME/custom.yaml"
-
-# admin
-# prom-operator
-
-# 6781

@@ -1,9 +1,9 @@
 apiVersion: kops.k8s.io/v1alpha2
 kind: Cluster
 metadata:
-  creationTimestamp: "2024-11-03T14:59:44Z"
+  creationTimestamp: "2024-12-19T10:40:54Z"
   generation: 1
-  name: app.konkas.tech
+  name: app.bapatlas.site
 spec:
   api:
     dns: {}
@@ -13,15 +13,14 @@ spec:
     enabled: true
   channel: stable
   cloudProvider: aws
-  configBase: s3://app.konkas.tech/app.konkas.tech
-  dnsZone: konkas.tech
+  configBase: s3://app.kops.bapatlas.site/app.bapatlas.site
+  dnsZone: bapatlas.site
   etcdClusters:
   - cpuRequest: 200m
     etcdMembers:
     - encryptedVolume: true
-      instanceGroup: control-plane-ap-south-1b
-      name: b
-      volumeSize: 3
+      instanceGroup: control-plane-ap-south-1a
+      name: a
     manager:
       backupRetentionDays: 90
     memoryRequest: 100Mi
@@ -29,9 +28,8 @@ spec:
   - cpuRequest: 100m
     etcdMembers:
     - encryptedVolume: true
-      instanceGroup: control-plane-ap-south-1b
-      name: b
-      volumeSize: 3
+      instanceGroup: control-plane-ap-south-1a
+      name: a
     manager:
       backupRetentionDays: 90
     memoryRequest: 100Mi
@@ -44,8 +42,8 @@ spec:
   kubernetesApiAccess:
   - 0.0.0.0/0
   - ::/0
-  kubernetesVersion: 1.30.2
-  masterPublicName: api.app.konkas.tech
+  kubernetesVersion: 1.30.7
+  masterPublicName: api.app.bapatlas.site
   metricsServer:
     enabled: true
   networkCIDR: 172.20.0.0/16

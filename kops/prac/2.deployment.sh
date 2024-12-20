@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Variables
-NIHARIKA="/home/ubuntu/kubernetes"
-NIHA="/home/ubuntu/kubernetes"
-NS1="instana"
-NS2="expense"
+# # Variables
+# NIHARIKA="/home/ubuntu/kubernetes"
+# NIHA="/home/ubuntu/kubernetes"
+# NS1="instana"
+# NS2="expense"
 
 # Function to print messages
 # print_message() {
@@ -44,9 +44,9 @@ NS2="expense"
 # kubectl get ns "$NS1" &>/dev/null || kubectl create ns "$NS1"
 # kubectl get ns "$NS2" &>/dev/null || kubectl create ns "$NS2"
 
-# Metrics Server Deployment
-print_message "Deploying Metrics Server"
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# # Metrics Server Deployment
+# print_message "Deploying Metrics Server"
+# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
 # Instana Namespace Deployments
 # print_message "Deploying Services in Instana Namespace: Mongo, MySQL, Rabbit, and Redis"
