@@ -1,0 +1,28 @@
+replicaCount: 2
+
+image:
+  repository: siva9666/dispatch-instana
+  tag: v1
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8080
+
+resources:
+  requests:
+    memory: 128Mi
+    cpu: 50m
+  limits:
+    memory: 256Mi
+    cpu: 100m
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 50
+
+env:
+  AMQP_HOST: "rabbit"
+  AMQP_USER: "cm9ib3Nob3A=" # Base64 encoded
+  AMQP_PASS: "cm9ib3Nob3AxMjM=" # Base64 encoded

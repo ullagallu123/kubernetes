@@ -1,0 +1,6 @@
+apiVersion: v2
+name: expense-frontend
+description: A Helm chart for the expense frontend application
+version: 0.1.0
+appVersion: "1.0"
+icon: https://example.com/path-to-your-icon.png

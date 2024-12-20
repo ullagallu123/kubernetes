@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  labels:
+    app: frontend
+    project: expense
+data:
+  nginx.conf: {{ .Values.config.nginxConf | quote }}

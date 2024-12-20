@@ -1,0 +1,36 @@
+replicaCount: 1
+
+image:
+  repository: siva9666/redis-instana
+  tag: v1
+
+service:
+  type: ClusterIP
+  port: 6379
+
+resources:
+  requests:
+    memory: "200Mi"
+    cpu: "50m"
+  limits:
+    memory: "300Mi"
+    cpu: "100m"
+
+storage:
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  storageClassName: instana
+
+probes:
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+
+  readiness:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3

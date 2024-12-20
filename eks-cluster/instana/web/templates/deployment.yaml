@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web 
+  labels:
+    project: instana 
+    tier: web 
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      project: instana 
+      tier: web 
+  template:
+    metadata:
+      labels:
+        project: instana 
+        tier: web 
+    spec:
+      containers:
+        - name: web 
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources:
+            requests:
+              memory : {{ .Values.resources.requests.memory }}
+              cpu : {{ .Values.resources.requests.cpu }}
+            limits :
+              memory : {{ .Values.resources.limits.memory }}
+              cpu : {{ .Values.resources.limits.cpu }}
+
+          readinessProbe:
+            httpGet:
+              path : /
+              port : {{ .Values.service.port }} 
+            initialDelaySeconds : {{ .Values.probes.readiness.initialDelaySeconds }}
+            periodSeconds : {{ .Values.probes.readiness.periodSeconds }}
+            timeoutSeconds : {{ .Values.probes.readiness.timeoutSeconds }}
+            successThreshold : {{ .Values.probes.readiness.successThreshold }}
+            failureThreshold : {{ .Values.probes.readiness.failureThreshold }}
+
+          livenessProbe:
+            httpGet:
+              path : /
+              port : {{ .Values.service.port }} 
+            initialDelaySeconds : {{ .Values.probes.liveness.initialDelaySeconds }}
+            periodSeconds : {{ .Values.probes.liveness.periodSeconds }}
+            timeoutSeconds : {{ .Values.probes.liveness.timeoutSeconds }}
+            successThreshold : {{ .Values.probes.liveness.successThreshold }}
+            failureThreshold : {{ .Values.probes.liveness.failureThreshold }}
+
+          volumeMounts:
+          - name : nginx-config 
+            mountPath : /etc/nginx/nginx.conf 
+            subPath : nginx.conf 
+
+      volumes:
+      - name : nginx-config 
+        configMap :
+          name : web-config 

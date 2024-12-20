@@ -1,0 +1,49 @@
+replicaCount: 2
+
+image:
+  repository: siva9666/payment-instana
+  tag: v1
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "1024Mi"
+    cpu: "400m"
+
+probes:
+  liveness:
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  cpuUtilizationTarget: 50
+
+config:
+  CART_HOST: "cart"
+  CART_PORT: "8080"
+  USER_HOST: "user"
+  USER_PORT: "8080"
+  AMQP_HOST: "rabbit"
+
+secrets:
+  AMQP_USER: cm9ib3Nob3A=
+  AMQP_PASS: cm9ib3Nob3AxMjM=

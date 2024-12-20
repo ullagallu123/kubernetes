@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  labels:
+    project: instana
+    tier: web
+data:
+  nginx.conf: {{ .Values.config.nginxConfig | quote }}

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-config
+  labels:
+    project: instana
+    tier: user-backend
+data:
+  MONGO: {{ .Values.config.MONGO | quote }}
+  MONGO_URL: {{ .Values.config.MONGO_URL | quote }}
+  REDIS_HOST: {{ .Values.config.REDIS_HOST | quote }}

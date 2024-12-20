@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cart-config
+  labels:
+    project: instana
+    tier: backend-cart
+data:
+  CATALOGUE_HOST: {{ .Values.config.CATALOGUE_HOST | quote }}
+  CATALOGUE_PORT: {{ .Values.config.CATALOGUE_PORT | quote }}
+  REDIS_HOST: {{ .Values.config.REDIS_HOST | quote }}

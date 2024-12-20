@@ -1,0 +1,6 @@
+apiVersion: v2
+name: expense-mysql
+description: A Helm chart for MySQL StatefulSet
+version: 0.1.0
+appVersion: "1.0"
+icon: https://example.com/path-to-your-icon.png

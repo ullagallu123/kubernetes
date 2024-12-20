@@ -1,0 +1,22 @@
+backend:
+  image: siva9666/expense-backend:v1
+
+  config:
+    DB_HOST: mysql-external
+    DB_DATABASE: transactions
+
+  secrets:
+    DB_USER: ZXhwZW5zZQ==
+    DB_PWD: RXhwZW5zZUFwcDE=
+  hpa:
+    minReplicas: 2
+    maxReplicas: 10
+    cpuTarget: 50
+
+  resources:
+    requests:
+      memory: 500Mi
+      cpu: 100m
+    limits:
+      memory: 600Mi
+      cpu: 200m

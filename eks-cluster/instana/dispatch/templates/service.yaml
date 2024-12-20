@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dispatch.fullname" . }}
+  labels:
+    {{- include "dispatch.labels" . | nindent 4 }}
+spec:
+  selector:
+    project: instana
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}

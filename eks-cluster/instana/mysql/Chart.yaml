@@ -1,0 +1,7 @@
+apiVersion: v2
+name: mysql
+description: A Helm chart for deploying MySQL
+type: application
+version: 0.1.0
+appVersion: "1.0"
+icon: https://example.com/path/to/icon.png

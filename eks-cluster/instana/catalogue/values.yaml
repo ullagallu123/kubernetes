@@ -1,0 +1,42 @@
+replicaCount: 2
+
+image:
+  repository: siva9666/catalogue-instana
+  tag: monitoring-v1
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+
+probes:
+  liveness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  cpuUtilizationTarget: 50
+
+config:
+  MONGO: "true"
+  MONGO_URL: "mongodb://mongo:27017/catalogue"
