@@ -1,7 +1,7 @@
 apiVersion: kops.k8s.io/v1alpha2
 kind: Cluster
 metadata:
-  creationTimestamp: "2024-12-19T10:40:54Z"
+  creationTimestamp: "2024-12-25T05:50:46Z"
   generation: 1
   name: app.bapatlas.site
 spec:
