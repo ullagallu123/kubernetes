@@ -6,9 +6,12 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
-  nodePort: 32121
+
+ingress:
+  enabled: true
+  host: "expense-prod.bapatlas.site"
 
 resources:
   requests:

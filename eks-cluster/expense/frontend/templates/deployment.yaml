@@ -24,9 +24,9 @@ spec:
             - containerPort: {{ .Values.service.port }}
           resources:
             requests:
-              {{- toYaml .Values.resources.requests | nindent 12 }}
+              {{- toYaml .Values.resources.requests | nindent 14 }}
             limits:
-              {{- toYaml .Values.resources.limits | nindent 12 }}
+              {{- toYaml .Values.resources.limits | nindent 14 }}
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf

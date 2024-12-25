@@ -2,7 +2,7 @@ backend:
   image: siva9666/expense-backend:v1
 
   config:
-    DB_HOST: mysql-external
+    DB_HOST: mysql
     DB_DATABASE: transactions
 
   secrets:

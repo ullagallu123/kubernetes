@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-CLUSTER_NAME="ullagallu"
+CLUSTER_NAME="ullagallu-bapatlas.site"
 REGION="ap-south-1"
 ZONES="ap-south-1a,ap-south-1b"
 PROFILE="eks-siva.bapatlas.site"
