@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-CLUSTER_NAME="ullagallu"
+CLUSTER_NAME="ullagallu-bapatlas-site"
 REGION="ap-south-1"
 NODEGROUP_NAME="ng1"
 NODE_TYPE="t3a.medium"
@@ -9,7 +9,7 @@ NODES=4
 NODES_MIN=2
 NODES_MAX=10
 NODE_VOLUME_SIZE=20
-SSH_PUBLIC_KEY="dev"
+SSH_PUBLIC_KEY="bapatlas.site"
 PROFILE="eks-siva.bapatlas.site"
 LOG_FILE="/tmp/eks_nodegroup_$(date +%Y-%m-%d_%H-%M-%S).log"
 

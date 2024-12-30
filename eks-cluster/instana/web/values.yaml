@@ -7,12 +7,12 @@ image:
 service:
   type: NodePort 
   port: 80
-  nodePort: 32122  # Only used if type is NodePort
+  #nodePort: 32122  # Only used if type is NodePort
 
 
 ingress:
-  enabled: false
-  host: "instana.konkas.tech"
+  enabled: true
+  host: "instana-prod.bapatlas.site"
   
 resources:
   requests:
