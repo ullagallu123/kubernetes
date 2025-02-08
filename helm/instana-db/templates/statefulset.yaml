@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.env }}-{{ .Values.name }}
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+spec:
+  serviceName: "{{ .Values.env }}-{{ .Values.name }}"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- toYaml .Values.labels | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- toYaml .Values.labels | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.env }}-{{ .Values.name }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag}}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+
+          {{- if .Values.probes.enabled }}
+          livenessProbe:
+            exec:
+              command:
+                {{- toYaml .Values.probes.liveness.command | nindent 14 }}
+            initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+
+          readinessProbe:
+            exec:
+              command:
+                {{- toYaml .Values.probes.readiness.command | nindent 14 }}
+            initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+          {{- end }}
+          {{- if .Values.secrets.enabled }}
+          env:
+            {{- range .Values.secrets.list }}
+            {{- range $key, $value := .data }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.env }}-{{ $.Values.name }}
+                  key: {{ $key }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+          volumeMounts:
+            - name: data-volume
+              mountPath: {{ .Values.storage.mountPath }}
+
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes: 
+          {{- toYaml .Values.storage.accessModes | nindent 8 }}
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}
+        storageClassName: {{ .Values.storage.storageClassName }}

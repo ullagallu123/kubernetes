@@ -1,0 +1,27 @@
+# {{- if .Values.configmap.enabled }}
+# {{- range .Values.configmap.list }}
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: {{ $.Values.env }}-{{ $.Values.name }}
+#   labels:
+#     {{- toYaml $.Values.labels | nindent 4 }}
+# type: Opaque
+# data:
+#   {{- range $key, $value := .data }}
+#   {{ $key }}: {{ $value | b64enc | quote }}
+#   {{- end }}
+# ---
+# {{- end }}
+# {{- end }}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.env }}-{{ .Values.name }}
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+data:
+  {{- range $key, $value := .Values.configmap }}
+  {{ $key }}: "{{ $value }}"
+  {{- end }}

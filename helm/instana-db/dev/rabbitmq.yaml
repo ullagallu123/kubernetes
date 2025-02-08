@@ -1,0 +1,47 @@
+env: dev
+name: rabbitmq
+replicaCount: 1
+labels:
+  app: rabbitmq
+  tier: database
+image:
+  repository: siva9666
+  name: rabbit-instana
+  tag: v1
+service:
+  port: 5672
+resources:
+  requests:
+    memory: "1024Mi"
+    cpu: "500m"
+  limits:
+    memory: "2048Mi"
+    cpu: "700m"
+probes:
+  enabled: true
+  liveness:
+    command: 
+      - rabbitmq-diagnostics
+      - -q
+      - ping
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    command:
+      - rabbitmq-diagnostics
+      - -q
+      - ping
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+secrets:
+  enabled: false
+storage:
+  accessModes: 
+    - ReadWriteOnce
+  size: 1Gi
+  storageClassName: instana
+  mountPath: /var/lib/rabbitmq

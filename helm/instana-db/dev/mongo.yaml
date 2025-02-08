@@ -1,0 +1,47 @@
+env: dev
+name: mongo
+replicaCount: 1
+labels:
+  app: mongo
+  tier: database
+image:
+  repository: siva9666
+  name: mongo-instana
+  tag: monitoring-v1
+service:
+  port: 27017
+resources:
+  requests:
+    memory: "1024Mi"
+    cpu: "300"
+  limits:
+    memory: "2048Mi"
+    cpu: "500"
+probes:
+  enabled: true
+  liveness:
+    command: 
+        - /bin/sh
+        - -c
+        - "echo 'db.stats().ok' | mongosh localhost:27017/test --quiet"
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+  readiness:
+    command:
+        - /bin/sh
+        - -c
+        - "echo 'db.stats().ok' | mongosh localhost:27017/test --quiet"
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+secrets:
+  enabled: false
+storage:
+  accessModes: 
+    - ReadWriteOnce
+  size: 1Gi
+  storageClassName: instana
+  mountPath: /data/db
