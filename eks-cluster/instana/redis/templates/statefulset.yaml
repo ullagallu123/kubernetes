@@ -42,7 +42,7 @@ spec:
             command:
               - redis-cli
               - -p
-              - "6379"   # Corrected port to match the exposed port in the service.
+              - "6379" 
               - ping
           initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
           periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
@@ -54,7 +54,7 @@ spec:
             command:
               - redis-cli
               - -p
-              - "6379"   # Corrected port to match the exposed port in the service.
+              - "6379"  
               - ping
           initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
           periodSeconds: {{ .Values.probes.readiness.periodsSeconds }}

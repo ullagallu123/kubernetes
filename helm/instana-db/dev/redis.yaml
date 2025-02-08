@@ -1,0 +1,49 @@
+env: dev
+name: redis
+replicaCount: 1
+labels:
+  app: redis
+  tier: database
+image:
+  repository: siva9666
+  name: redis-instana
+  tag: v1
+service:
+  port: 6379
+resources:
+  requests:
+    memory: "1024Mi"
+    cpu: "50m"
+  limits:
+    memory: "2048Mi"
+    cpu: "100m"
+probes:
+  enabled: true
+  liveness:
+    command: 
+      - redis-cli
+      - -p
+      - "6379" 
+      - ping
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+  readiness:
+    command:
+      - redis-cli
+      - -p
+      - "6379" 
+      - ping
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 2
+    failureThreshold: 3
+secrets:
+  enabled: false
+storage:
+  accessModes: 
+    - ReadWriteOnce
+  size: 1Gi
+  storageClassName: instana
+  mountPath: /data

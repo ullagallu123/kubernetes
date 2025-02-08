@@ -1,0 +1,52 @@
+env: dev
+name: mysql
+replicaCount: 1
+labels:
+  app: mysql
+  tier: database
+image:
+  repository: siva9666
+  name: mysql-instana
+  tag: v1
+service:
+  port: 3306
+resources:
+  requests:
+    memory: "1024Mi"
+    cpu: "250m"
+  limits:
+    memory: "2048Mi"
+    cpu: "500m"
+probes:
+  enabled: true
+  liveness:
+    command: 
+      - "mysqladmin"
+      - "ping"
+      - "-h"
+      - "localhost"
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    command:
+      - "mysqladmin"
+      - "ping"
+      - "-h"
+      - "localhost"
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+secrets:
+  enabled: true
+  list:
+    - data:
+        MYSQL_ROOT_PASSWORD: "RoboShop@1"
+storage:
+  accessModes: 
+    - ReadWriteOnce
+  size: 1Gi
+  storageClassName: instana
+  mountPath: /var/lib/mysql

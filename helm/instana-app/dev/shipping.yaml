@@ -1,0 +1,61 @@
+env: dev
+name: shipping
+labels:
+  app: shipping
+  tier: application
+replicaCount: 2
+image:
+  repository: siva9666
+  name: shipping-instana
+  tag: monitoring-v1
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "800m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+health_check:
+  path: /health
+probes:
+  enabled: true
+  liveness:
+    initialDelaySeconds: 10    
+    periodSeconds: 10            
+    timeoutSeconds: 2            
+    successThreshold: 1      
+    failureThreshold: 3 
+  readiness:
+    initialDelaySeconds: 10      
+    periodSeconds: 10           
+    timeoutSeconds: 2           
+    successThreshold: 1
+    failureThreshold: 3 
+
+configmap:
+  DB_HOST: "dev-mysql"
+  DB_PORT: "3306"
+  CART_ENDPOINT: "dev-cart:8080"
+hpa:
+  minReplicas: 2
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+service:
+  port: 8080
+
+secrets:
+  enabled: true
+  list:
+    - data:
+        DB_USER: "shipping"
+        DB_PASSWD: "RoboShop@1"
+
+
+
+

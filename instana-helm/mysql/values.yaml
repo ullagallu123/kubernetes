@@ -9,8 +9,7 @@ service:
   port: 3306
 
 mysql:
-  rootPassword: Um9ib1Nob3BAMQ== # Base64 encoded password
-
+  rootPassword: Um9ib1Nob3BAMQ==
 resources:
   requests:
     memory: "1Gi"

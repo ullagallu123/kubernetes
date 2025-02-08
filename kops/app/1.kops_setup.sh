@@ -1,15 +1,15 @@
 #!/bin/bash
 
-SPOT_ASG_MAX=8
-SPOT_ASG_MIN=4
+SPOT_ASG_MAX=2
+SPOT_ASG_MIN=2
 SPOT_INSTANCE_TYPE="t3a.medium"
 
-NODE_COUNT=2
-NODE_SIZE="t3a.small"
+NODE_COUNT=4
+NODE_SIZE="t3a.medium"
 NODE_VOLUME_SIZE=20
 NODE_ZONES="ap-south-1a,ap-south-1b"
 CONTROL_PLANE_COUNT=1
-CONTROL_PLANE_SIZE="t3a.small"
+CONTROL_PLANE_SIZE="t3a.medium"
 CONTROL_PLANE_VOLUME_SIZE=20
 CONTROL_PLANE_ZONES="ap-south-1a"
 DNS_ZONE="bapatlas.site"
@@ -91,40 +91,40 @@ rm -rf cluster.yaml  # Removes only cluster.yaml; adjust if needed
 
 
 
-# Fetch the cluster configuration and output to YAML file
-kops get cluster --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE" -o yaml > cluster.yaml
+# # Fetch the cluster configuration and output to YAML file
+# kops get cluster --name="$CLUSTER_NAME" --state="$KOPS_STATE_STORE" -o yaml > cluster.yaml
 
 
-# Deleting default instance groups
-print_message "Deleting Default Instance Groups"
-if kops get ig nodes-ap-south-1a --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" &>/dev/null; then
-    kops delete ig nodes-ap-south-1a --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" --yes
-    print_message "Deleted nodes-ap-south-1a."
-else
-    print_message "nodes-ap-south-1a already deleted or does not exist."
-fi
+# # Deleting default instance groups
+# print_message "Deleting Default Instance Groups"
+# if kops get ig nodes-ap-south-1a --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" &>/dev/null; then
+#     kops delete ig nodes-ap-south-1a --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" --yes
+#     print_message "Deleted nodes-ap-south-1a."
+# else
+#     print_message "nodes-ap-south-1a already deleted or does not exist."
+# fi
 
-if kops get ig nodes-ap-south-1b --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" &>/dev/null; then
-    kops delete ig nodes-ap-south-1b --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" --yes
-    print_message "Deleted nodes-ap-south-1b."
-else
-    print_message "nodes-ap-south-1b already deleted or does not exist."
-fi
+# if kops get ig nodes-ap-south-1b --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" &>/dev/null; then
+#     kops delete ig nodes-ap-south-1b --state="$KOPS_STATE_STORE" --name="$CLUSTER_NAME" --yes
+#     print_message "Deleted nodes-ap-south-1b."
+# else
+#     print_message "nodes-ap-south-1b already deleted or does not exist."
+# fi
 
-# Creating Spot Instance Group
-print_message "Creating Spot Instance Group"
-if ! kops get ig spot-1 --name="$CLUSTER_NAME" &>/dev/null; then
-    kops toolbox instance-selector "spot-1" \
-        --usage-class spot --cluster-autoscaler \
-        --base-instance-type $SPOT_INSTANCE_TYPE \
-        --allow-list '^t3a.*' --gpus 0 \
-        --node-count-max $SPOT_ASG_MAX --node-count-min $SPOT_ASG_MIN \
-        --node-volume-size 20 \
-        --name="$CLUSTER_NAME"
-    print_message "Spot instance group created."
-else
-    print_message "Spot instance group already exists."
-fi
+# # Creating Spot Instance Group
+# print_message "Creating Spot Instance Group"
+# if ! kops get ig spot-1 --name="$CLUSTER_NAME" &>/dev/null; then
+#     kops toolbox instance-selector "spot-1" \
+#         --usage-class spot --cluster-autoscaler \
+#         --base-instance-type $SPOT_INSTANCE_TYPE \
+#         --allow-list '^t3a.*' --gpus 0 \
+#         --node-count-max $SPOT_ASG_MAX --node-count-min $SPOT_ASG_MIN \
+#         --node-volume-size 20 \
+#         --name="$CLUSTER_NAME"
+#     print_message "Spot instance group created."
+# else
+#     print_message "Spot instance group already exists."
+# fi
 
 # Apply the changes in the Cloud
 print_message "Applying Cluster Changes"
