@@ -3,7 +3,7 @@ name: cart
 labels:
   app: cart
   tier: application
-replicaCount: 2
+replicaCount: 1
 image:
   repository: siva9666
   name: cart-instana
@@ -37,7 +37,7 @@ configmap:
   CATALOGUE_PORT: "8080"
   REDIS_HOST: "dev-redis"
 hpa:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 3
   metrics:
     - type: Resource

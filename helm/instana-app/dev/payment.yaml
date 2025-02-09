@@ -1,20 +1,20 @@
 env: dev
-name: catalogue
+name: payment
 labels:
-  app: catalogue
+  app: payment
   tier: application
 replicaCount: 1
 image:
   repository: siva9666
-  name: catalogue-instana
-  tag: monitoring-v1
+  name: payment-instana
+  tag: v1
 resources:
   requests:
-    memory: "128Mi"
-    cpu: "50m"
+    memory: "1Gi"
+    cpu: "800m"
   limits:
-    memory: "256Mi"
-    cpu: "75m"
+    memory: "2Gi"
+    cpu: "1000m"
 health_check:
   path: /health
 probes:
@@ -33,8 +33,11 @@ probes:
     failureThreshold: 3 
 
 configmap:
-  MONGO: "true"
-  MONGO_URL: "mongodb://dev-mongo:27017/catalogue"
+  CART_HOST: "dev-cart"
+  CART_PORT: "8080"
+  USER_HOST: "de-vuser"
+  USER_PORT: "8080"
+  AMQP_HOST: "dev-rabbitmq"
 hpa:
   minReplicas: 1
   maxReplicas: 3
@@ -47,7 +50,14 @@ hpa:
           averageUtilization: 50
 service:
   port: 8080
+
 secrets:
-  enabled: false
+  enabled: true
+  list:
+    - data:
+        DB_USER: "roboshop"
+        DB_PASSWD: "roboshop123"
+
+
 
 

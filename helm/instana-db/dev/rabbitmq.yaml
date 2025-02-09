@@ -12,11 +12,11 @@ service:
   port: 5672
 resources:
   requests:
-    memory: "1024Mi"
-    cpu: "500m"
+    memory: "1Gi"
+    cpu: "800m"
   limits:
-    memory: "2048Mi"
-    cpu: "700m"
+    memory: "2Gi"
+    cpu: "1000m"
 probes:
   enabled: true
   liveness:

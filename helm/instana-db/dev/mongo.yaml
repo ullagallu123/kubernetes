@@ -12,11 +12,11 @@ service:
   port: 27017
 resources:
   requests:
-    memory: "1024Mi"
-    cpu: "300"
+    memory: "1Gi"
+    cpu: "800m"
   limits:
-    memory: "2048Mi"
-    cpu: "500"
+    memory: "2Gi"
+    cpu: "1000m"
 probes:
   enabled: true
   liveness:
@@ -24,18 +24,18 @@ probes:
         - /bin/sh
         - -c
         - "echo 'db.stats().ok' | mongosh localhost:27017/test --quiet"
-    initialDelaySeconds: 10
-    periodSeconds: 5
-    timeoutSeconds: 2
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
     failureThreshold: 3
   readiness:
     command:
         - /bin/sh
         - -c
         - "echo 'db.stats().ok' | mongosh localhost:27017/test --quiet"
-    initialDelaySeconds: 5
-    periodSeconds: 5
-    timeoutSeconds: 2
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
     failureThreshold: 3
 secrets:
   enabled: false

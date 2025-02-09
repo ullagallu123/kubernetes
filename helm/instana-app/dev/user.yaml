@@ -3,7 +3,7 @@ name: user
 labels:
   app: user
   tier: application
-replicaCount: 2
+replicaCount: 1
 image:
   repository: siva9666
   name: user-instana
@@ -37,7 +37,7 @@ configmap:
   MONGO_URL: "mongodb://dev-mongo:27017/catalogue"
   REDIS_HOST: "dev-redis"
 hpa:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 3
   metrics:
     - type: Resource

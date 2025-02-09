@@ -46,6 +46,24 @@ spec:
             successThreshold: {{ .Values.probes.readiness.successThreshold }}   
             failureThreshold: {{ .Values.probes.readiness.failureThreshold }}         
           {{- end }}
+           {{- if eq .Values.name "frontend" }}
+          volumeMounts:
+            - name: {{ .Values.env }}-{{ .Values.name }}
+              mountPath: /etc/nginx/nginx.conf
+              subPath: NGINX_CONF
+          {{- else }}
           envFrom:
             - configMapRef:
                 name: {{ .Values.env }}-{{ .Values.name }}
+            {{- if .Values.secrets.enabled }}
+            - secretRef:
+                name: {{ .Values.env }}-{{ .Values.name }}
+            {{- end }}
+          {{- end }}
+
+      {{- if eq .Values.name "frontend" }}
+      volumes:
+        - name: {{ .Values.env }}-{{ .Values.name }}
+          configMap:
+            name: {{ .Values.env }}-{{ .Values.name }}
+      {{- end }}

@@ -3,7 +3,7 @@ name: shipping
 labels:
   app: shipping
   tier: application
-replicaCount: 2
+replicaCount: 1
 image:
   repository: siva9666
   name: shipping-instana
@@ -37,7 +37,7 @@ configmap:
   DB_PORT: "3306"
   CART_ENDPOINT: "dev-cart:8080"
 hpa:
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 3
   metrics:
     - type: Resource
@@ -53,9 +53,5 @@ secrets:
   enabled: true
   list:
     - data:
-        DB_USER: "shipping"
+        DB_USER:  "shipping"
         DB_PASSWD: "RoboShop@1"
-
-
-
-
