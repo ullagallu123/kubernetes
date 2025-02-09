@@ -1,0 +1,44 @@
+name: shipping
+env: dev
+replicaCount: 2
+
+labels:
+  app: shipping
+  environment: dev
+
+image:
+  repository: siva9666/shipping-instana
+  tag: monitoring-v1
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "800m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+
+probes:
+  liveness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  cpuUtilizationTarget: 50

@@ -5,7 +5,7 @@ metadata:
   labels:
     project: instana
 spec:
-  serviceName: "redis-headless"
+  serviceName: "redis"
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:

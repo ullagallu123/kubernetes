@@ -1,0 +1,44 @@
+name: payment
+env: dev
+replicaCount: 2
+
+labels:
+  app: payment
+  environment: dev
+
+image:
+  repository: siva9666/payment-instana
+  tag: monitoring-v1
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "200m"
+  limits:
+    memory: "1024Mi"
+    cpu: "400m"
+
+probes:
+  liveness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  cpuUtilizationTarget: 50

@@ -15,16 +15,16 @@ metadata:
     alb.ingress.kubernetes.io/group.order: '10'
     alb.ingress.kubernetes.io/healthcheck-path: '/health'
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:ap-south-1:522814728660:certificate/92ec1455-e69e-41a7-8c75-17cd3a18cd4d'
+    alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:ap-south-1:522814728660:certificate/439943f5-9c41-4b36-8568-b0b1ef1f3fb5'
     alb.ingress.kubernetes.io/ssl-policy: 'ELBSecurityPolicy-2016-08'
-    external-dns.alpha.kubernetes.io/hostname: 'expense-prod.bapatlas.site'
-    external-dns.alpha.kubernetes.io/ttl: '10'
     alb.ingress.kubernetes.io/actions.ssl-redirect: |
       {"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301" }}
+    external-dns.alpha.kubernetes.io/hostname: 'expense-prod.bapatlas.site'
+    external-dns.alpha.kubernetes.io/ttl: '10'
 spec:
   ingressClassName: alb
   rules:
-    # Redirect all HTTP traffic to HTTPS
+    # Redirect HTTP to HTTPS
     - http:
         paths:
           - pathType: Prefix
@@ -35,7 +35,7 @@ spec:
                 port:
                   name: use-annotation
 
-    # Actual HTTPS Rule for the Frontend
+    # Forward HTTPS traffic to the frontend service
     - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
@@ -47,4 +47,3 @@ spec:
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}
-

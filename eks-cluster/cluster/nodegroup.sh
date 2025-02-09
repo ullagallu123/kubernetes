@@ -6,8 +6,8 @@ REGION="ap-south-1"
 NODEGROUP_NAME="ng1"
 NODE_TYPE="t3a.medium"
 NODES=4
-NODES_MIN=2
-NODES_MAX=10
+NODES_MIN=1
+NODES_MAX=8
 NODE_VOLUME_SIZE=20
 SSH_PUBLIC_KEY="bapatlas.site"
 PROFILE="eks-siva.bapatlas.site"
@@ -41,6 +41,7 @@ eksctl create nodegroup --cluster=$CLUSTER_NAME \
                        --profile $PROFILE \
                        --managed \
                        --asg-access \
+                       --external-dns-access \
                        --spot  &>>"$LOG_FILE"
 if [ $? -ne 0 ]; then
     echo "Error: Failed to create nodegroup." | tee -a "$LOG_FILE"
@@ -52,3 +53,6 @@ end_time=$(date +%s)
 
 # Calculate and print elapsed time
 elapsed_time $start_time $end_time
+
+
+# --spot  &>>"$LOG_FILE"
