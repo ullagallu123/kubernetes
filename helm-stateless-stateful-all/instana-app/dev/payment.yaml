@@ -35,7 +35,7 @@ probes:
 configmap:
   CART_HOST: "dev-cart"
   CART_PORT: "8080"
-  USER_HOST: "de-vuser"
+  USER_HOST: "dev-user"
   USER_PORT: "8080"
   AMQP_HOST: "dev-rabbitmq"
 hpa:
